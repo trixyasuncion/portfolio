@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Trixy Joy Asuncion · ATP Portfolio | Snake Game + Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,450;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #faf9f6;
+      color: #2d3a2c;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      letter-spacing: -0.2px;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --sage: #9bb89b;
+      --sage-soft: #d4e0d4;
+      --cream: #faf9f6;
+      --charcoal: #2d3a2c;
+      --moss: #6b7f6b;
+      --border: #e0e4dc;
+      --shadow: 0 4px 24px rgba(0,0,0,0.04);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(250, 249, 246, 0.92);
+      backdrop-filter: blur(16px);
+      z-index: 100;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: var(--charcoal);
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #4a6741, #7f9a6e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--moss);
+      font-weight: 480;
+      font-size: 0.9rem;
+      text-transform: lowercase;
+      transition: color 0.25s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--sage);
+      transition: width 0.25s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    section {
+      padding: 5rem 0 4rem;
+      scroll-margin-top: 5rem;
+    }
+
+    .headline-section {
+      padding-top: 8rem;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-deco {
+      position: absolute;
+      top: -60px;
+      right: -40px;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(212,224,212,0.35) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: floatGlow 14s infinite alternate;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0,0) scale(1); opacity: 0.4; }
+      100% { transform: translate(-35px, 30px) scale(1.1); opacity: 0.7; }
+    }
+
+    .headline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .avatar-frame {
+      width: 280px;
+      height: 320px;
+      background: linear-gradient(145deg, #cbdcc6, #b7ccb0);
+      border-radius: 48% 52% 42% 58% / 55% 45% 55% 45%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 25px 40px rgba(0,0,0,0.05);
+      border: 3px solid white;
+      animation: softRise 6s ease-in-out infinite;
+      overflow: hidden;
+    }
+
+    .avatar-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    @keyframes softRise {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .avatar-frame i {
+      font-size: 6rem;
+      color: #4a6741;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.1));
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 4.8rem);
+      font-weight: 650;
+      color: var(--charcoal);
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .name-glow {
+      background: linear-gradient(125deg, #2c4b2a, #688b5e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .badge-intro {
+      display: inline-block;
+      background: #eef3eb;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      color: #3f6040;
+      margin-top: 0.8rem;
+      font-weight: 500;
+    }
+
+    .motto-personal {
+      font-size: 1.5rem;
+      font-weight: 380;
+      color: #5f7860;
+      margin: 0.8rem 0 1rem;
+      border-left: 3px solid var(--sage);
+      padding-left: 1.2rem;
+    }
+
+    .bio-story {
+      font-size: 1rem;
+      color: #3a4d3a;
+      margin-bottom: 1.5rem;
+      max-width: 520px;
+      background: rgba(212,224,212,0.2);
+      padding: 1rem;
+      border-radius: 24px;
+    }
+
+    .tag-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .skill-tag {
+      background: #ffffffcc;
+      backdrop-filter: blur(2px);
+      padding: 0.35rem 1.2rem;
+      border-radius: 30px;
+      color: #3a5a3a;
+      font-weight: 470;
+      font-size: 0.85rem;
+      border: 1px solid #cadfc2;
+      transition: 0.2s;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 570;
+      margin-bottom: 2rem;
+      letter-spacing: -0.3px;
+      display: inline-block;
+      border-bottom: 3px solid var(--sage);
+      padding-bottom: 6px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.8rem;
+      box-shadow: var(--shadow);
+      border: 1px solid #e2e9df;
+      transition: all 0.2s;
+    }
+
+    .journey-text {
+      background: #ffffffdd;
+      border-radius: 28px;
+      padding: 2rem;
+      margin-top: 1rem;
+      border-left: 5px solid var(--sage);
+    }
+
+    /* BUTTONS: No download, only "See my resume" modal */
+    .btn-resume {
+      background: var(--sage);
+      border: none;
+      color: white;
+      padding: 0.85rem 2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 1rem;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+      text-decoration: none;
+    }
+
+    .btn-resume:hover {
+      background: #7f9f7f;
+      transform: translateY(-2px);
+    }
+
+    /* Game link style */
+    .game-link-card {
+      background: linear-gradient(135deg, #283e2a, #1e3022);
+      border-radius: 2rem;
+      text-align: center;
+      padding: 2rem;
+      transition: 0.25s;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      color: white;
+    }
+    .game-link-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+    }
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1rem;
+    }
+    .contact-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .contact-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: #47634a;
+      text-decoration: none;
+      margin-right: 1.8rem;
+      font-weight: 470;
+    }
+    .canva-btn {
+      background: #eef1e6;
+      border-radius: 40px;
+      padding: 0.8rem 1.6rem;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid #dee5da;
+      color: #7f8e7a;
+    }
+    @media (max-width: 750px) {
+      .headline-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .motto-personal {
+        border-left: none;
+        padding-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <div class="logo">♡ trixy joy asuncion</div>
+      <div class="nav-links">
+        <a href="#home">home</a>
+        <a href="#journey">journey</a>
+        <a href="#resume">resume</a>
+        <a href="#games">games</a>
+        <a href="#contact">contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero section - personal identity -->
+    <section class="headline-section" id="home">
+      <div class="bg-deco"></div>
+      <div class="container">
+        <div class="headline-grid">
+          <div class="avatar-frame">
+            <img src="20250312_110518.png" alt="Trixy Joy Asuncion">
+          </div>
+          <div>
+            <div class="badge-intro"><i class="fas fa-map-marker-alt"></i> ballang, buguey, cagayan · 17 y/o</div>
+            <h1><span class="name-glow">Trixy Joy Asuncion</span></h1>
+            <div class="motto-personal">"from stem student to future medtech & creative coder"</div>
+            <p class="bio-story">🌿 Grade 12 STEM · ATP program learner. I turned my shyness into strength, learned to build computers, and mastered HTML/CSS/JS from scratch. My dream: CSU Andrews Medtech, but coding is my powerful second path.</p>
+            <div class="tag-group">
+              <span class="skill-tag">HTML/CSS</span>
+              <span class="skill-tag">Microsoft Office</span>
+              <span class="skill-tag">System Unit Pro</span>
+              <span class="skill-tag">AI-assisted Snake</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOURNEY section -->
+    <section id="journey">
+      <div class="container">
+        <h2 class="section-title">⟡ my atp journey</h2>
+        <div class="journey-text">
+          <p style="font-size:1.1rem; margin-bottom:1rem;"><i class="fas fa-leaf" style="color:#9bb89b;"></i> <strong>From introvert to builder</strong></p>
+          <p>When I first stepped into ATP class, I was quiet but determined. My parents encouraged me to take advance learning — a backup plan for the future if ever medtech doesn't work out. And I'm grateful!<br><br>
+          I didn't know how to open a system unit or handle hardware components, but now I can assemble and disassemble with confidence. In Grade 11, coding was a struggle — those HTML, CSS and JavaScript errors felt impossible. But today? I craft smooth pages, and I even built a <strong>fully functional Snake Game</strong> powered with AI-assist logic! This experience taught me that courage beats fear. 💚</p>
+          <div style="margin-top:1.4rem; display: flex; gap:1rem; flex-wrap:wrap;">
+            <span class="skill-tag"><i class="fas fa-computer"></i>Microsoft Office</span>
+            <span class="skill-tag"><i class="fas fa-microchip"></i> hardware pro</span>
+            <span class="skill-tag"><i class="fas fa-code"></i> AI frontend craft</span>
+            <span class="skill-tag"><i class="fas fa-robot"></i> AI tools integration</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUME section - BUTTON now directly links to Canva (no JavaScript prompt) -->
+    <section id="resume">
+      <div class="container">
+        <h2 class="section-title">📄 resume & skills</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+          <div class="card" style="flex: 1.5;">
+            <h3 style="margin-bottom: 0.8rem;">⚡ technical & creative skills</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem;">
+              <span class="skill-tag">HTML5 & CSS3</span>
+              <span class="skill-tag">AI Tools</span>
+              <span class="skill-tag">AI JavaScript (ES6)</span>
+              <span class="skill-tag">AI Responsive Design</span>
+              <span class="skill-tag">System Unit Assembly</span>
+              <span class="skill-tag">Snake Game (AI-assisted)</span>
+              <span class="skill-tag">Problem Solving</span>
+            </div>
+            <p><i class="fas fa-certificate" style="color:#6b8c5c;"></i> STEM Student · Grade 12 · LASNHS Dalaya Ext.</p>
+            <p><i class="fas fa-chalkboard-user"></i> Alternative pathway: programming & hardware troubleshooting</p>
+            <p><i class="fas fa-heart" style="color:#9bb89b;"></i> Passion: blend of medical science and creative tech</p>
+          </div>
+          <div class="card" style="flex: 1; text-align:center;">
+            <i class="fas fa-file-alt" style="font-size: 2.2rem; color: var(--sage);"></i>
+            <h3 style="margin: 0.8rem 0;">my resume</h3>
+            <!-- This button now directly opens your Canva link, no JS prompt -->
+            <a href="https://canva.link/kona7pq0xpswqi1" target="_blank" class="btn-resume" style="text-decoration: none; color: white; font-weight: 600; display: inline-flex; align-items: center; gap: 0.7rem;">
+              <i class="fas fa-eye"></i> See my resume
+            </a>
+            <p style="margin-top: 1rem; font-size:0.8rem;">click to preview my full ATP journey & skills</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAMES section - only Snake Game powered by AI tools, opens snake.html -->
+    <section id="games">
+      <div class="container">
+        <h2 class="section-title">🎮 my premium game</h2>
+        <p style="margin-bottom: 1.5rem;">✨ <strong>Snake Game</strong> — built with JavaScript & AI-powered assistance for smooth logic. Click the card to play the full interactive game (snake.html).</p>
+        <div class="games-grid">
+          <a href="snake.html" id="snakeGameLink" class="game-link-card" style="text-decoration: none;">
+            <i class="fas fa-apple-alt" style="font-size: 2.8rem; color: #b7f78a;"></i>
+            <h3 style="margin: 0.8rem 0; color: #e2ffcf;">🐍 Snake Game · AI powered</h3>
+            <p style="color: #cfecca;">Classic snake with smooth controls, touch & keyboard support. Built using AI-assisted logic & vanilla JS.</p>
+            <span class="skill-tag" style="display: inline-block; margin-top: 12px; background:#3e6b35;">▶ click to play</span>
+          </a>
+          <!-- extra decorative concept card but game only snake -->
+          <div class="card" style="text-align: center; background:#f9fbf5;">
+            <i class="fas fa-robot" style="font-size: 2rem; color: var(--sage);"></i>
+            <h4 style="margin: 0.5rem 0;">AI tools enhanced</h4>
+            <p style="font-size:0.85rem;">Leveraged AI for cleaner collision detection, smoother mechanics and optimized performance.</p>
+          </div>
+        </div>
+        <p style="margin-top: 1rem; background:#e2ecd9; padding:0.5rem 1rem; border-radius: 50px; font-size:0.8rem; display:inline-block;">🏆 the snake game is hosted separately (snake.html) — ready for high scores! 🏆</p>
+      </div>
+    </section>
+
+    <!-- CONTACT section + Canva Portfolio Link -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">✧ connect & portfolio</h2>
+        <div class="contact-flex">
+          <div class="contact-links">
+            <a href="#"><i class="fas fa-envelope"></i> trixyasuncion124@gmail.com</a>
+            <a href="#"><i class="fas fa-phone"></i> 09683630772</a>
+          </div>
+          <div class="canva-btn">
+            <!-- This link also directly opens your Canva, no JS needed -->
+            <a href="https://canva.link/kona7pq0xpswqi1" target="_blank" style="text-decoration: none; color: #2c5e2a; font-weight: 500; display: flex; align-items: center; gap: 6px;">
+              <i class="fab fa-canva" style="font-size:1.4rem;"></i> my canva portfolio ↗
+            </a>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 2rem; background: #f5f8f2;">
+          <p><i class="fas fa-quote-left"></i> "From Ballang to a future in medtech & code — every line of code is a step toward my dream."</p>
+          <p style="margin-top:0.5rem;">— Trixy, proud ATP scholar & introvert-turned-builder</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Trixy Joy Asuncion · built with 💚 from cagayan | stem · alt learning · snake game (AI enhanced)</p>
+  </footer>
+
+  <script>
+    (function() {
+      // Smooth scroll for nav
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId !== '#') {
+            const targetElem = document.querySelector(targetId);
+            if (targetElem) targetElem.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Snake game link confirmation (optional, just a console log)
+      const snakeLink = document.getElementById('snakeGameLink');
+      if (snakeLink) {
+        snakeLink.addEventListener('click', (e) => {
+          console.log("Opening Snake Game (snake.html). Make sure the file is in same directory.");
+        });
+      }
+
+      // No more JavaScript prompt for resume. All links are direct <a> tags now.
+      console.log("Trixy's Portfolio — Resume & Canva links open directly. Snake game ready.");
+    })();
+  </script>
+</body>
+</html>
